@@ -1,6 +1,11 @@
 package com.in4java.base;
 
+import lombok.Data;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author: yingjf
@@ -8,8 +13,17 @@ import org.junit.jupiter.api.Test;
  * @description:
  */
 public class In4javaTest {
+
+    @Data
+    class A{
+        Integer b;
+    }
+
     @Test
     void contextLoads() {
-        System.out.println("111");
+        Object object = null;
+        if (object instanceof JSONObject) {
+
+        }
     }
 }
