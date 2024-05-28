@@ -1,14 +1,9 @@
 package com.in4java.base;
 
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
-import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Stack;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * @author: yingjf
@@ -18,51 +13,42 @@ import java.util.Stack;
 @Slf4j
 public class In4javaTest {
 
-    @Data
-    class A {
-        Integer b;
+    void contextLoads(int a ,int b) {
+        log.info("test");
+    }
+}
+
+
+@SpringBootTest
+class In4javaTestTests {
+
+    private In4javaTest in4javaTest;
+    private final Logger log = LoggerFactory.getLogger(In4javaTest.class);
+
+    @BeforeEach
+    void setUp() {
+        in4javaTest = new In4javaTest();
     }
 
     @Test
-    void contextLoads() {
-        Object object = null;
-        if (object instanceof JSONObject) {
-
-        }
-        String x = "xx";
-        char i = 'i';
-        char g = 'g';
-        System.out.println(i);
-        System.out.println(g);
-        System.out.println(i > g);
+    @DisplayName("Should log info with positive integers")
+    void contextLoads_withPositiveIntegers() {
+        // This test assumes the success path where the method logs information without errors.
+        // Since the actual logging behavior is external, we're focusing on the method's ability to execute with valid arguments.
+        in4javaTest.contextLoads(5, 10);
     }
 
-    public static void main(String[] args) {
-
-        System.out.println(isValid("()"));
+    @Test
+    @DisplayName("Should log info with negative integers")
+    void contextLoads_withNegativeIntegers() {
+        // Testing the method with negative integers to ensure it handles all integer inputs gracefully.
+        in4javaTest.contextLoads(-5, -10);
     }
 
-    public static boolean isValid(String s) {
-        Map<String, String> map = new HashMap<>();
-        map.put(")", "(");
-        map.put("}", "{");
-        map.put("]", "[");
-        Stack<String> stack = new Stack<>();
-        for (int i = 0; i < s.length(); i++) {
-            String temp = String.valueOf(s.charAt(i));
-            if (!map.containsKey(temp)) {
-                stack.push(temp);
-            }
-            if (stack.empty()) {
-                return false;
-            }
-            if (Objects.equals(stack.peek(), map.get(temp))) {
-                stack.pop();
-            } else {
-                return false;
-            }
-        }
-        return stack.empty();
+    @Test
+    @DisplayName("Should log info with zero")
+    void contextLoads_withZero() {
+        // Testing the method with zero to check its behavior with boundary values.
+        in4javaTest.contextLoads(0, 0);
     }
-
 }
