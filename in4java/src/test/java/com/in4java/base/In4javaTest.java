@@ -1,9 +1,9 @@
 package com.in4java.base;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author: yingjf
@@ -13,42 +13,39 @@ import org.springframework.boot.test.context.SpringBootTest;
 @Slf4j
 public class In4javaTest {
 
-    void contextLoads(int a ,int b) {
-        log.info("test");
+    public static void main(String[] args) {
+        int[] array = new int[]{0,-1};
+        int i = longestConsecutive(array);
+        System.out.println(i);
+
     }
+
+    public static int longestConsecutive(int[] nums) {
+        // 将数组转换为 Set，去除重复元素
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
+        }
+        int max = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            for(int k=i+1;k<Integer.MAX_VALUE;k++){
+                if(set.contains(nums[i]+k-i)){
+                    max = Math.max(max,k-i);
+                    continue;
+                }else{
+                    max = Math.max(max,k-i);
+                    break;
+                }
+            }
+        }
+
+        return max;
+    }
+
+
+
 }
 
 
-@SpringBootTest
-class In4javaTestTests {
 
-    private In4javaTest in4javaTest;
-    private final Logger log = LoggerFactory.getLogger(In4javaTest.class);
-
-    @BeforeEach
-    void setUp() {
-        in4javaTest = new In4javaTest();
-    }
-
-    @Test
-    @DisplayName("Should log info with positive integers")
-    void contextLoads_withPositiveIntegers() {
-        // This test assumes the success path where the method logs information without errors.
-        // Since the actual logging behavior is external, we're focusing on the method's ability to execute with valid arguments.
-        in4javaTest.contextLoads(5, 10);
-    }
-
-    @Test
-    @DisplayName("Should log info with negative integers")
-    void contextLoads_withNegativeIntegers() {
-        // Testing the method with negative integers to ensure it handles all integer inputs gracefully.
-        in4javaTest.contextLoads(-5, -10);
-    }
-
-    @Test
-    @DisplayName("Should log info with zero")
-    void contextLoads_withZero() {
-        // Testing the method with zero to check its behavior with boundary values.
-        in4javaTest.contextLoads(0, 0);
-    }
-}
