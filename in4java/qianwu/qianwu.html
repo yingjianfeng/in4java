@@ -27,7 +27,7 @@
     //录音对象
     var Recorder = function (stream) {
         var sampleBits = 16; //输出采样数位 8, 16
-        var sampleRate = 8000; //输出采样率
+        var sampleRate = 16000; //输出采样率
         var context = new AudioContext();
         var audioInput = context.createMediaStreamSource(stream);
         var recorder = context.createScriptProcessor(4096, 1, 1);
@@ -151,7 +151,7 @@
      * WebSocket
      */
     function useWebSocket() {
-        ws = new WebSocket("wss://tingwu-realtime-cn-beijing.aliyuncs.com/api/ws/v1?mc=dUfNsq5J0_pOIs5CTh2zHveR8Zc3jdoBn_falLS2UF-3bCvqapqgfhBRxqgOjf8g5qSpIwPvt2Y3vTDEdaHZ19v3T4kLTQiFTwcAj3qimrPgWaYk2IfgFxg2uMosOhdV");
+        ws = new WebSocket("wss://tingwu-realtime-cn-beijing.aliyuncs.com/api/ws/v1?mc=dUfNsq5J0_pOIs5CTh2zHveR8Zc3jdoBn_falLS2UF-3bCvqapqgfhBRxqgOjf8gbrTNCAzaFddPcFG_kJBm3N0KJPF7GrnLIC_2LPVLmkvgWaYk2IfgFxg2uMosOhdV");
         ws.binaryType = 'arraybuffer'; //传输的是 ArrayBuffer 类型的数据
         ws.onopen = function () {
             console.log('握手成功');
