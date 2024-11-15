@@ -24,12 +24,7 @@ import java.util.List;
  */
 
 public class CustomPromptTest {
-//    public static String ALIBABA_CLOUD_ACCESS_KEY_ID = "LTAI5t7brj3VVuVL2dMCVA91";
-//    public static String ALIBABA_CLOUD_ACCESS_KEY_SECRET = "tM6qbgJ3nU6L5WZRgBhQvuXQY2JUSq";
-//    public static String APPKEY = "jmW4YR9XTFG9bDTm";
-    public static String ALIBABA_CLOUD_ACCESS_KEY_ID = "LTAI5tR4WyssFW1YYTxGEYZD";
-    public static String ALIBABA_CLOUD_ACCESS_KEY_SECRET = "5zEk0Yln9cOnB1V70GpveZZC5xWRkz";
-    public static String APPKEY = "caabn6yLPn8wj7fJ";
+
 
     String taskId = "ac0c05c3fe9d40f9bc746bd066b08eb0";
     @Test
