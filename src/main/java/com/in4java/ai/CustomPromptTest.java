@@ -53,7 +53,7 @@ public class CustomPromptTest {
                 "5. 总结此次录音,客户方提及的预算情况"+
                 "6. 总结此次录音,客户方提及的价格敏感信息"+
                 "7. 提及的有关交付时间信息"+
-                "以上7点帮我返回以json格式返回，我需要有序获取用来展示"
+                "以上7点帮我返回，我需要有序获取用来展示在前端页面"
                 )
         );
         String data = testFiletrans(url, contents);
