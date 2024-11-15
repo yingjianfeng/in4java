@@ -11,7 +11,10 @@ import com.aliyuncs.http.FormatType;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.http.ProtocolType;
 import com.aliyuncs.profile.DefaultProfile;
-import com.in4java.ai.pojo.*;
+import com.in4java.ai.pojo.ConversationalSummaryItem;
+import com.in4java.ai.pojo.CustomPromptItem;
+import com.in4java.ai.pojo.QuestionsAnsweringSummaryItem;
+import com.in4java.ai.pojo.TingwuResult;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -35,14 +38,12 @@ public class CustomPromptTest {
         JSONArray contents = new JSONArray()
 
                 //.fluentAdd(prompt("projectBackground","总结此次录音,客户方提及的使用目的或项目背景，尽量20字之内"))
-                .fluentAdd(prompt("currentIssues","{Transcription} 总结此次录音,客户方提及的目前问题，尽量50字之内"))
-                .fluentAdd(prompt("preferences","{Transcription} 总结此次录音,客户方提及的客户偏好，尽量50字之内"))
+                .fluentAdd(prompt("currentIssues", "{Transcription} 总结此次录音,客户方提及的目前问题，尽量50字之内"))
+                .fluentAdd(prompt("preferences", "{Transcription} 总结此次录音,客户方提及的客户偏好，尽量50字之内"))
                 //.fluentAdd(prompt("competitorSituation","{Transcription} 总结此次录音,客户方提及的其他提供商的情况，尽量50字之内"))
                 //.fluentAdd(prompt("budget","{Transcription} 总结此次录音,客户方提及的预算情况，尽量50字之内"))
                 //.fluentAdd(prompt("priceSensitivity","{Transcription} 总结此次录音,客户方提及的价格敏感信息，尽量50字之内"))
-                .fluentAdd(prompt("deliveryTime","{Transcription} 提及的有关交付时间信息，尽量50字之内"))
-
-                ;
+                .fluentAdd(prompt("deliveryTime", "{Transcription} 提及的有关交付时间信息，尽量50字之内"));
         String data = testFiletrans(url, contents);
         System.out.println(data);
     }
@@ -50,12 +51,12 @@ public class CustomPromptTest {
     @Test
     public void test_all() throws Exception {
         //String taskId = "3dad97fda0ba46d180cba0525b7145a6";
-        String transcription = transcription(taskId);
+        JSONObject transcription = transcription(taskId);
         JSONArray meetingAssistance = meetingAssistance(taskId);
         JSONObject summarization = summarization(taskId);
         JSONArray customPrompt = customPrompt(taskId);
         TingwuResult result = new TingwuResult();
-        result.setTranscription(transcription.substring(0,100)+"....");
+        result.setTranscription(transcription);
         result.setMeetingAssistance(meetingAssistance);
         result.setSummarization(summarization);
         result.setCustomPrompt(customPrompt);
@@ -66,7 +67,7 @@ public class CustomPromptTest {
 
     @Test
     public void test2() throws Exception {
-       // String taskId = "61cc11b18cd64d6cb2932d9306bb52ad";
+        // String taskId = "61cc11b18cd64d6cb2932d9306bb52ad";
         String data = getTaskInfo(taskId);
         System.out.println(data);
     }
@@ -80,9 +81,10 @@ public class CustomPromptTest {
 
     /**
      * 生成待办
+     *
+     * @param
      * @date 2024/11/15 10:28
      * @author yingjf
-     * @param
      */
     @Test
     public void test4() throws Exception {
@@ -91,16 +93,17 @@ public class CustomPromptTest {
     }
 
     @Test
-    public void test5()throws Exception{
+    public void test5() throws Exception {
         System.out.println(summarization(taskId));
     }
+
     @Test
-    public void test6()throws Exception{
+    public void test6() throws Exception {
         System.out.println(customPrompt(taskId));
     }
 
     // 自定义
-    public JSONArray customPrompt(String taskId)throws Exception{
+    public JSONArray customPrompt(String taskId) throws Exception {
         String data = getTaskInfo(taskId);
         String url = JSONObject.parseObject(data).getJSONObject("Data")
                 .getJSONObject("Result").getString("CustomPrompt");
@@ -115,7 +118,7 @@ public class CustomPromptTest {
     }
 
     // 总结
-    public JSONObject summarization(String taskId) throws Exception{
+    public JSONObject summarization(String taskId) throws Exception {
         String data = getTaskInfo(taskId);
         String url = JSONObject.parseObject(data).getJSONObject("Data")
                 .getJSONObject("Result").getString("Summarization");
@@ -142,15 +145,19 @@ public class CustomPromptTest {
     }
 
     // 翻译
-    public String transcription(String taskId ) throws Exception{
+    public JSONObject transcription(String taskId) throws Exception {
+        JSONObject ans = new JSONObject();
         String data = getTaskInfo(taskId);
-        System.out.println(data);
         String url = JSONObject.parseObject(data).getJSONObject("Data")
                 .getJSONObject("Result").getString("Transcription");
         String str = OkHttpUtil.get(url);
         JSONObject jsonObject = JSONObject.parseObject(str);
-        JSONArray jsonArray = jsonObject.getJSONObject("Transcription").getJSONArray("Paragraphs");
-        JSONArray ans = new JSONArray();
+        JSONObject transcription = jsonObject.getJSONObject("Transcription");
+        JSONObject audioInfo = transcription.getJSONObject("AudioInfo");
+        Integer duration = audioInfo.getInteger("Duration");
+
+        JSONArray jsonArray = transcription.getJSONArray("Paragraphs");
+        JSONArray wordsArr = new JSONArray();
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject parsedObject = JSONObject.parseObject(jsonArray.get(i).toString());
             StringBuilder sb = new StringBuilder();
@@ -160,20 +167,27 @@ public class CustomPromptTest {
                 String word = JSONObject.parseObject(words.get(j).toString()).getString("Text");
                 sb.append(word);
             }
-            ans.add(sb.toString());
+            wordsArr.add(sb.toString());
         }
-        return ans.toJSONString();
+        String wordsArrStr = wordsArr.toJSONString();
+        if(wordsArrStr.length()>101){
+            wordsArrStr = wordsArrStr.substring(0,100);
+        }
+        ans.put("transcription", wordsArrStr);
+        ans.put("durationStr", duration/60000+"分"+((duration%60000)/1000)+"秒");
+        ans.put("duration", duration);
+        return ans;
     }
 
     // 待办
-    public JSONArray meetingAssistance(String taskId)throws Exception{
+    public JSONArray meetingAssistance(String taskId) throws Exception {
         String data = getTaskInfo(taskId);
         String url = JSONObject.parseObject(data).getJSONObject("Data")
                 .getJSONObject("Result").getString("MeetingAssistance");
         String str = OkHttpUtil.get(url);
         JSONObject jsonObject = JSONObject.parseObject(str);
         JSONArray jsonArray = jsonObject.getJSONObject("MeetingAssistance").getJSONArray("Actions");
-        if(jsonArray==null||jsonArray.size()==0){
+        if (jsonArray == null || jsonArray.size() == 0) {
             return new JSONArray();
         }
         JSONArray ans = new JSONArray();
@@ -210,7 +224,7 @@ public class CustomPromptTest {
         List list = new ArrayList();
         list.add("Actions");   // 待办
         //list.add("KeyInformation");
-        meetingAssistance.put("Types",list);
+        meetingAssistance.put("Types", list);
         parameters.put("MeetingAssistance", meetingAssistance);
 
         // 是否启用摘要功能，开启后会可以生成全文摘要、发言人总结等结果
@@ -220,7 +234,7 @@ public class CustomPromptTest {
         types.add("Paragraph");
         types.add("Conversational");
         types.add("QuestionsAnswering");
-        summarization.put("Types",types);
+        summarization.put("Types", types);
         parameters.put("Summarization", summarization);
 
         // 是否启用自定义 Prompt 功能。
@@ -261,11 +275,10 @@ public class CustomPromptTest {
         return request;
     }
 
-    public static JSONObject prompt(String name,String prompt){
+    public static JSONObject prompt(String name, String prompt) {
         return new JSONObject().fluentPut("Name", name).fluentPut("Prompt", prompt)
-                .fluentPut("Model","tingwu-turbo") .fluentPut("TransType","chat");
+                .fluentPut("Model", "tingwu-turbo").fluentPut("TransType", "chat");
     }
-
 
 
 }

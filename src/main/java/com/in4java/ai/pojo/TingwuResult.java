@@ -22,7 +22,7 @@ import java.io.Serializable;
 @ToString
 public class TingwuResult implements Serializable {
     // 翻译
-    private String transcription ;
+    private JSONObject transcription ;
     // 待办
     private JSONArray meetingAssistance ;
     // 总结
