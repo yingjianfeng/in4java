@@ -173,6 +173,9 @@ public class CustomPromptTest {
         String str = OkHttpUtil.get(url);
         JSONObject jsonObject = JSONObject.parseObject(str);
         JSONArray jsonArray = jsonObject.getJSONObject("MeetingAssistance").getJSONArray("Actions");
+        if(jsonArray==null||jsonArray.size()==0){
+            return new JSONArray();
+        }
         JSONArray ans = new JSONArray();
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject parsedObject = JSONObject.parseObject(jsonArray.get(i).toString());
