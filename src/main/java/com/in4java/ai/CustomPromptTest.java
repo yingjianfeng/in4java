@@ -34,16 +34,28 @@ public class CustomPromptTest {
     // https://nls-portal.console.aliyun.com/tingwu/overview
     // https://help.aliyun.com/zh/tingwu/custom-prompt     单次最多三个
     public void test() throws Exception {
-        String url = "http://lippi-space-sh.cn-shanghai.oss.aliyuncs.com/yundisk0/iAEIAqRmaWxlA6h5dW5kaXNrMATOIT_LigXNEs0GzRKhB85nNb9XCM0CnQ.file?Expires=1731644954&OSSAccessKeyId=LTAIjmWpzHta71rc&Signature=s269AVOOyoD7ApHdbrsOzi%2FdU%2Bo%3D";
+        String url = "http://lippi-space-sh.cn-shanghai.oss.aliyuncs.com/yundisk0/iAEIAqRmaWxlA6h5dW5kaXNrMATOIWdfOAXNEq0GzQtNB85nNb9XCM0CfA.file?Expires=1731665251&OSSAccessKeyId=LTAIjmWpzHta71rc&Signature=uoJgRB00movoY1mdECUnCb9T3Z8%3D";
         JSONArray contents = new JSONArray()
 
-                //.fluentAdd(prompt("projectBackground","总结此次录音,客户方提及的使用目的或项目背景，尽量20字之内"))
-                .fluentAdd(prompt("currentIssues", "{Transcription} 总结此次录音,客户方提及的目前问题，尽量50字之内"))
-                .fluentAdd(prompt("preferences", "{Transcription} 总结此次录音,客户方提及的客户偏好，尽量50字之内"))
-                //.fluentAdd(prompt("competitorSituation","{Transcription} 总结此次录音,客户方提及的其他提供商的情况，尽量50字之内"))
-                //.fluentAdd(prompt("budget","{Transcription} 总结此次录音,客户方提及的预算情况，尽量50字之内"))
-                //.fluentAdd(prompt("priceSensitivity","{Transcription} 总结此次录音,客户方提及的价格敏感信息，尽量50字之内"))
-                .fluentAdd(prompt("deliveryTime", "{Transcription} 提及的有关交付时间信息，尽量50字之内"));
+//                .fluentAdd(prompt("projectBackground","总结此次录音,客户方提及的使用目的或项目背景，尽量20字之内"))
+//                .fluentAdd(prompt("currentIssues", "{Transcription} 总结此次录音,客户方提及的目前问题，尽量50字之内"))
+//                .fluentAdd(prompt("preferences", "{Transcription} 总结此次录音,客户方提及的客户偏好，尽量50字之内"))
+//                .fluentAdd(prompt("competitorSituation","{Transcription} 总结此次录音,客户方提及的其他提供商的情况，尽量50字之内"))
+//                .fluentAdd(prompt("budget","{Transcription} 总结此次录音,客户方提及的预算情况，尽量50字之内"))
+//                .fluentAdd(prompt("priceSensitivity","{Transcription} 总结此次录音,客户方提及的价格敏感信息，尽量50字之内"))
+//                .fluentAdd(prompt("deliveryTime", "{Transcription} 提及的有关交付时间信息，尽量50字之内"));
+
+        .fluentAdd(prompt("customer", "{Transcription} ," +
+                "1. 总结此次录音,客户方提及的使用目的或项目背景"+
+                "2. 总结此次录音,客户方提及的目前问题"+
+                "3. 总结此次录音,客户方提及的客户偏好"+
+                "4. 总结此次录音,客户方提及的其他提供商的情况"+
+                "5. 总结此次录音,客户方提及的预算情况"+
+                "6. 总结此次录音,客户方提及的价格敏感信息"+
+                "7. 提及的有关交付时间信息"+
+                "以上7点帮我返回以json格式返回，我需要有序获取用来展示"
+                )
+        );
         String data = testFiletrans(url, contents);
         System.out.println(data);
     }
