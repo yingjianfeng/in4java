@@ -1,0 +1,35 @@
+in4java/target/
+in4java/*.log
+in4java/.mvn/
+
+*.md
+######### OS files ###########
+*/.DS_Store
+.DS_Store
+
+### log ###
+log.txt
+log.txt.*
+*.log
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+!.mvn/wrapper/maven-wrapper.jar
+.svn/
+**/.svn/
+.metadata/
+**/.metadata/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+/**/rebel.xml

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下载录音</title>
+</head>
+<body>
+<button id="downloadButton">下载录音</button>
+<script>
+    document.getElementById('downloadButton').addEventListener('click', function() {
+        // 录音文件的 URL
+        var audioUrl = 'https://ccc-v2-online.oss-cn-shanghai.aliyuncs.com/ccc-record-mixed/ding7e387112428f2dbf35c2f4657eb6378f/2024/01/job-469345702079799296.mp3?Expires=1706180712&OSSAccessKeyId=LTAI4GDDtCgcY8HmXTiEhr1q&Signature=mEKPnz1qMTUrVKXcbevJH9tDg1M%3D';
+        // 创建一个 XMLHttpRequest 对象
+        var xhr = new XMLHttpRequest();
+        // 设置响应类型为 blob
+        xhr.responseType = 'blob';
+        // 发送 GET 请求
+        xhr.open('GET', audioUrl, true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                // 创建一个 Blob 对象
+                var blob = xhr.response;
+                // 创建一个链接元素
+                var downloadLink = document.createElement('a');
+                // 设置链接的 href 属性为 Blob 对象的 URL
+                downloadLink.href = URL.createObjectURL(blob);
+                // 设置下载时的文件名
+                downloadLink.download = '下载的录音文件名';
+                // 将链接添加到文档中
+                document.body.appendChild(downloadLink);
+                // 触发链接的点击事件以开始下载
+                downloadLink.click();
+                // 移除链接元素
+                document.body.removeChild(downloadLink);
+            }
+        };
+        xhr.send();
+    });
+</script>
+
+</body>
+</html>
