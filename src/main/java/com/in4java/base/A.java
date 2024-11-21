@@ -17,6 +17,7 @@ public class A {
         List<Integer> value = new ArrayList<>();
 
     }
+
 }
 
 

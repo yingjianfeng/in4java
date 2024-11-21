@@ -34,7 +34,7 @@ public class CustomPromptTest {
     // https://nls-portal.console.aliyun.com/tingwu/overview
     // https://help.aliyun.com/zh/tingwu/custom-prompt     单次最多三个
     public void test() throws Exception {
-        String url = "http://lippi-space-sh.cn-shanghai.oss.aliyuncs.com/yundisk0/iAEIAqRmaWxlA6h5dW5kaXNrMATOIWdfOAXNEq0GzQtNB85nNb9XCM0CfA.file?Expires=1731665251&OSSAccessKeyId=LTAIjmWpzHta71rc&Signature=uoJgRB00movoY1mdECUnCb9T3Z8%3D";
+        String url = "https://xbbprdapp.xbongbong.cn/xbbProApp/xbb170ff3a5dee44963a8d2c157c3e0d75e/1727377356026/mp3/1732154480259ad84922bff2b861c3fd589d093354e67.mp3";
         JSONArray contents = new JSONArray()
 
 //                .fluentAdd(prompt("projectBackground","总结此次录音,客户方提及的使用目的或项目背景，尽量20字之内"))
@@ -46,14 +46,27 @@ public class CustomPromptTest {
 //                .fluentAdd(prompt("deliveryTime", "{Transcription} 提及的有关交付时间信息，尽量50字之内"));
 
         .fluentAdd(prompt("customer", "{Transcription} ," +
-                "1. 总结此次录音,客户方提及的使用目的或项目背景"+
-                "2. 总结此次录音,客户方提及的目前问题"+
-                "3. 总结此次录音,客户方提及的客户偏好"+
-                "4. 总结此次录音,客户方提及的其他提供商的情况"+
-                "5. 总结此次录音,客户方提及的预算情况"+
-                "6. 总结此次录音,客户方提及的价格敏感信息"+
-                "7. 提及的有关交付时间信息"+
-                "以上7点帮我返回，我需要有序获取用来展示在前端页面"
+                "# 角色：\n" +
+                        "销售对话分析专家\n" +
+                        "\n" +
+                        "#任务：基于对话内容，提炼以下任务信息\n" +
+                        "                1. 客户方提及的使用目的或项目背景\n" +
+                        "                2. 客户方提及的目前问题\n" +
+                        "                3. 客户偏好\n" +
+                        "                4. 户方提及其他提供商的情况\n" +
+                        "                5. 客户预算情况\n" +
+                        "                6. 客户方提及的价格敏感信息\n" +
+                        "                7. 交付时间\n" +
+                        "               \n" +
+                        "                检测结果整体以JSON列表格式，通过“name”和“result”返回结果，\n" +
+                        "                “客户方提及的使用目的或项目背景”的“name”是“background”\n" +
+                        "                “客户方提及的目前问题”的“name”是“issue”\n" +
+                        "                “客户偏好”的“name”是“Preference”\n" +
+                        "                “户方提及其他提供商的情况”的“name”是“Competitors”\n" +
+                        "                “客户预算情况”的“name”是“Budget”\n" +
+                        "                “客户方提及的价格敏感信息”的“name”是“price”\n" +
+                        "                “交付时间”的“name”是“DeliveryTime”"
+
                 )
         );
         String data = testFiletrans(url, contents);
@@ -125,6 +138,11 @@ public class CustomPromptTest {
 
         List<CustomPromptItem> customPromptItems = JSONArray.parseArray(customPrompt, CustomPromptItem.class);
         JSONArray ans = new JSONArray();
+        CustomPromptItem customPromptItem = customPromptItems.get(0);
+        String result = customPromptItem.getResult();
+        result = result.substring(7, result.length() - 3);
+        result = result.replace("\n","");
+        customPromptItems = JSONArray.parseArray(result, CustomPromptItem.class);
         ans.addAll(customPromptItems);
         return ans;
     }

@@ -1,8 +1,5 @@
 package com.in4java.leetcode;
 
-import java.util.Comparator;
-import java.util.PriorityQueue;
-
 /**
  * @author: yingjf
  * @date: 2024/10/31 16:04
@@ -11,17 +8,25 @@ import java.util.PriorityQueue;
 public class PriorityQueueTest {
 
     public static void main(String[] args) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder()); // 默认为最小堆
-        pq.add(3);
-        pq.add(1);
-        pq.add(5);
-        pq.add(10);
-        pq.add(2);
-
-        // 遍历并移除元素
-        while (!pq.isEmpty()) {
-            System.out.println(pq.poll()); // 输出：1, 2, 3, 5, 10
-        }
+        System.out.println(oddCells(2,3,new int[][]{new int[]{0,1},new int[]{1,1}} ));
     }
 
+
+    public static int oddCells(int m, int n, int[][] indices) {
+        int ans = 0;
+        int[][] arr = new int[m][n];
+        for (int i = 0; i <indices.length; i++) {
+            int a = indices[i][0];
+            int b = indices[i][1];
+            for (int j = 0; j < n; j++) {
+                indices[a][j] += 1;
+                if(indices[a][j]%2==1)ans++;
+            }
+            for (int k = 0; k <m ; k++) {
+                indices[k][b] += 1;
+                if(indices[k][b]%2==1)ans++;
+            }
+        }
+        return ans;
+    }
 }
