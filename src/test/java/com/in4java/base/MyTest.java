@@ -22,6 +22,6 @@ public class MyTest {
         // 打印转换后的List
         System.out.println(list);
         // m
-        // h 1
+        // h 1 2
     }
 }
