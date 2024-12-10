@@ -23,6 +23,6 @@ public class MyTest {
         System.out.println(list);
         // 1 2 3 4
 
-        // master  1 2
+        // master  1 2 3
     }
 }
