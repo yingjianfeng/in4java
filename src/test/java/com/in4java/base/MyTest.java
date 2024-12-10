@@ -21,7 +21,7 @@ public class MyTest {
                 .collect(Collectors.toList());
         // 打印转换后的List
         System.out.println(list);
-        // m 2
+        // m 2 4
         // h
     }
 }
