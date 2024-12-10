@@ -1,5 +1,9 @@
 package com.in4java.base;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 /**
  * @author: yingjf
  * @date: 2024/10/23 10:24
@@ -8,28 +12,14 @@ package com.in4java.base;
 public class MyTest {
 
     public static void main(String[] args) {
-        String corpid = "xbx$$123";
-        System.out.println("main1:hashcode:"+corpid.hashCode());
-        getAccessToken(corpid);
-        System.out.println(corpid);
-        System.out.println("main2:hashcode:"+corpid.hashCode());
-    }
+        // 假设queries是一个基本数据类型的数组，例如int[]
+        int[] queries = {1, 2, 3, 4, 5};
 
-    static void getAccessToken(String str){
-        System.out.println("getAccessToken1:hashcode:"+str.hashCode());
-        str = setValue(str);
-        removeValue(str);
-        System.out.println("getAccessToken2:hashcode:"+str.hashCode());
-    }
-    static String setValue(String str){
-        System.out.println("setValue1:hashcode:"+str.hashCode());
-        str = str.replace("xbx$$", "");
-        System.out.println("setValue2:hashcode:"+str.hashCode());
-        return str;
-    }
-
-    static void removeValue(String str){
-        str = "xbx$$"+str;
-        System.out.println("removeValue:hashcode:"+str.hashCode());
+        List<String> list = IntStream.rangeClosed(1, 3)
+                .boxed() // 将IntStream转换为Stream<Integer>
+                .map(item -> String.valueOf(item))
+                .collect(Collectors.toList());
+        // 打印转换后的List
+        System.out.println(list);
     }
 }
