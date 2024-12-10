@@ -21,7 +21,7 @@ public class MyTest {
                 .collect(Collectors.toList());
         // 打印转换后的List
         System.out.println(list);
-        // hotfix 1
+        // hotfix 1   -- 1
         // 1 2 3 4
 
         // master  1 2 3   -- 1  2
