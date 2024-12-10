@@ -22,5 +22,7 @@ public class MyTest {
         // 打印转换后的List
         System.out.println(list);
         // 1 2 3 4
+
+        // master  1
     }
 }
