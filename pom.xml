@@ -18,6 +18,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.mp4parser</groupId>
+            <artifactId>isoparser</artifactId>
+            <version>1.9.41</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>3.14.9</version>
