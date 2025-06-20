@@ -1,6 +1,7 @@
 in4java/target/
 in4java/*.log
 in4java/.mvn/
+/target/
 
 *.md
 ######### OS files ###########
