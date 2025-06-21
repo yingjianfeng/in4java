@@ -1,4 +1,4 @@
-package com.in4java.jvmandbox;
+package com.in4java.jvm.jvmandbox;
 
 /**
  * @author: yingjf

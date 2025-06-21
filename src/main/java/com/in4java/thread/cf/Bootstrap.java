@@ -1,4 +1,4 @@
-package com.in4java.CompletableFuture;
+package com.in4java.thread.cf;
 
 /**
  * @author: yingjf

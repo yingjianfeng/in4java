@@ -1,4 +1,4 @@
-package com.in4java.aqs;
+package com.in4java.thread.aqs;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
