@@ -1,17 +1,13 @@
-package com.in4java.spring;
+package com.in4java.spring.log;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 /**
@@ -22,7 +18,7 @@ import java.lang.reflect.Method;
 @Component
 @Order(1)
 @Slf4j
-public class WebLogAspect {
+public class LogAspect {
 
     // 定义切入点
     @Pointcut("execution(public * com.in4java.spring.*.*(..))")
@@ -30,7 +26,7 @@ public class WebLogAspect {
     }
 
     // 方法执行前打印参数
-    @Before("webLog() && @annotation(LogAnnotation)")
+    @Before("webLog() && @annotation(com.in4java.spring.log.LogAnnotation)")
     public void doBefore(JoinPoint joinPoint) {
         // 获取方法签名
         Signature signature = joinPoint.getSignature();
@@ -79,7 +75,7 @@ public class WebLogAspect {
     }*/
 
     // 方法执行异常时打印异常信息和参数
-    @AfterThrowing(value = "webLog() && @annotation(LogAnnotation) ", throwing = "ex")
+    @AfterThrowing(value = "webLog() && @annotation(com.in4java.spring.log.LogAnnotation) ", throwing = "ex")
     public void doAfterThrowing(JoinPoint joinPoint, Throwable ex) {
         // 获取方法签名
         Signature signature = joinPoint.getSignature();

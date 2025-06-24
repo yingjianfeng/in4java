@@ -1,4 +1,4 @@
-package com.in4java.spring;
+package com.in4java.spring.log;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

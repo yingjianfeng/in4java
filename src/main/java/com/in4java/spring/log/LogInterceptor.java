@@ -1,4 +1,4 @@
-package com.in4java.spring;
+package com.in4java.spring.log;
 
 import cn.hutool.core.lang.UUID;
 import org.slf4j.MDC;
