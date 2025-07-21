@@ -1,4 +1,4 @@
-package com.in4java.base;
+package com.in4java.base.syn;
 
 public class Test01Visibility {
     // 多个线程都会访问的数据，我们称为线程的共享数据

@@ -1,4 +1,4 @@
-package com.in4java.base;
+package com.in4java.base.syn;
 
 import java.util.ArrayList;
 
