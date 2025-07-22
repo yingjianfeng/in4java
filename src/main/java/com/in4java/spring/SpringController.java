@@ -1,5 +1,6 @@
 package com.in4java.spring;
 
+import com.in4java.spring.exception.BusinessException;
 import com.in4java.spring.log.LogAnnotation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,14 @@ public class SpringController {
         if(res!=null){
             System.out.println("get:"+res +"id:"+Thread.currentThread().getId());
         }
+        return "get";
+    }
+
+
+    @GetMapping("/ex/{id}")
+    public String ex(@PathVariable Integer id) throws Exception{
+        if(id<10) throw new BusinessException(100,"id<UNK>");
+        else if (id >100) throw new Exception("id大于100");
         return "get";
     }
 

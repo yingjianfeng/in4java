@@ -15,19 +15,14 @@ public class Test {
 
     }
 
-    public int minimumBoxes(int[] apple, int[] capacity) {
-        int appleSize = 0;
-        for(int i:apple){
-            appleSize+=i;
+    public boolean divideArray(int[] nums) {
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int num:nums){
+            map.merge(num,1,Integer::sum);
         }
-        Arrays.sort(capacity);
-        int ans = 0;
-        for (int i = capacity.length-1; i >=0; i--) {
-            appleSize-=i;
-            ans++;
-            if(appleSize<=0) return ans;
-        }
-        return ans;
+
+        Collection<Integer> values = map.values();
+      return   new HashSet<>(map.values()).size()==1;
     }
 }
 
