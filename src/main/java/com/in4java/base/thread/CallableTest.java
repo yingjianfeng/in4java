@@ -18,9 +18,6 @@ public class CallableTest {
         service.shutdown();
 
         new Thread(()->{System.out.println("xxxxxxxxxx");}).start();
-
-
-
     }
 
 }
