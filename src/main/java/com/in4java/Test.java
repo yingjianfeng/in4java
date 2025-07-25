@@ -2,8 +2,6 @@ package com.in4java;
 
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
-import java.util.*;
-
 
 
 public class Test {
@@ -15,14 +13,21 @@ public class Test {
 
     }
 
-    public boolean divideArray(int[] nums) {
-        Map<Integer,Integer> map = new HashMap<>();
-        for(int num:nums){
-            map.merge(num,1,Integer::sum);
+    public boolean strongPasswordCheckerII(String password) {
+        if(password.length() < 8) return false;
+        boolean hasLowerCase = false;
+        boolean hasUpperCase = false;
+        boolean hasDigit = false;
+        boolean hasSpecial = false;
+        String str ="!@#$%^&*()-+";
+        for (int i = 0; i < password.length(); i++) {
+            if (Character.isLowerCase(password.charAt(i))) hasLowerCase = true;
+            if (Character.isUpperCase(password.charAt(i))) hasUpperCase = true;
+            if (Character.isDigit(password.charAt(i))) hasDigit = true;
+            if(str.indexOf(password.charAt(i)) != -1)  hasSpecial = true;
+            if(i>0&& password.charAt(i-1) == password.charAt(i)) return false;
         }
-
-        Collection<Integer> values = map.values();
-      return   new HashSet<>(map.values()).size()==1;
+        return hasLowerCase && hasUpperCase && hasDigit && hasSpecial;
     }
 }
 

@@ -18,20 +18,3 @@ public class In4javaApplication {
 }
 
 
-
-@Configuration
-class TestServiceConfig implements ApplicationContextAware {
-
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        System.out.println("xxxx");
-    }
-
-    @Bean
-    public Object test(){
-        Object o = new Object();
-        return o;
-    }
-
-}
