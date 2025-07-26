@@ -1,5 +1,6 @@
 package com.in4java.base.thread;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -8,12 +9,14 @@ public class WakeTest {
 
     public static void main(String[] args) throws Exception {
         WakeTest wakeTest = new WakeTest();
-        wakeTest.lock();
-        wakeTest.sync();
+//        wakeTest.lock();
+//        wakeTest.sync();
+        wakeTest.print();
     }
 
     /**
      * 通过lock
+     *
      * @throws Exception
      */
     public void lock() throws Exception {
@@ -57,8 +60,10 @@ public class WakeTest {
 
 
     }
+
     /**
      * 通过synchronized
+     *
      * @throws Exception
      */
     public void sync() throws Exception {
@@ -92,6 +97,44 @@ public class WakeTest {
                 }
             }
         }, "ThreadB");
+        threadA.start();
+        threadB.start();
+        threadA.join();
+        threadB.join();
+    }
+
+    /**
+     * 循环打印出0到200
+     * @throws Exception
+     */
+    public void print() throws Exception {
+        AtomicInteger atomicInteger = new AtomicInteger(0);
+        Thread threadA = new Thread(() -> {
+            while (atomicInteger.get() < 200) {
+                synchronized (atomicInteger) {
+                    try {
+                        System.out.println(Thread.currentThread().getName() + ">>>>" + atomicInteger.incrementAndGet());
+                        atomicInteger.notify();
+                        atomicInteger.wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        },"ThreadA");
+        Thread threadB = new Thread(() -> {
+            while (atomicInteger.get() < 200){
+                synchronized (atomicInteger) {
+                    try {
+                        System.out.println(Thread.currentThread().getName() + ">>>>" + atomicInteger.incrementAndGet());
+                        atomicInteger.notify();
+                        atomicInteger.wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        },"ThreadB");
         threadA.start();
         threadB.start();
         threadA.join();
