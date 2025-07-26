@@ -3,16 +3,19 @@ package com.in4java.base.syn;
 public class AccountingSync implements Runnable {
     //共享资源(临界资源)
     static int i = 0;
+
     // synchronized 同步方法
     public synchronized void increase() {
-        i ++;
+        i++;
     }
+
     @Override
     public void run() {
-        for(int j=0;j<1000000;j++){
+        for (int j = 0; j < 1000000; j++) {
             increase();
         }
     }
+
     public static void main(String args[]) throws InterruptedException {
         AccountingSync instance = new AccountingSync();
         Thread t1 = new Thread(instance);

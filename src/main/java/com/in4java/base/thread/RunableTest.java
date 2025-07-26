@@ -1,6 +1,6 @@
 package com.in4java.base.thread;
 
-public class RunableTest implements Runnable {
+public  class RunableTest implements Runnable {
     @Override
     public void run() {
         System.out.println("xxx");
