@@ -11,9 +11,15 @@ public class FilesReadTest {
 
     @SneakyThrows
     public static void main(String[] args) {
+//        String path =  FilesReadTest.class.getClassLoader().getResource("file/filesRead.txt").getPath();
+//        List<String> lines = Files.readAllLines(new  File(path).toPath() );
+//        lines.forEach(System.out::println);
+
         String path =  FilesReadTest.class.getClassLoader().getResource("file/filesRead.txt").getPath();
-        List<String> lines = Files.readAllLines(new  File(path).toPath() );
-        lines.forEach(System.out::println);
+        FileUserIterable fileUserIterable = new FileUserIterable(new  File(path));
+        for( FileUser fileUser : fileUserIterable) {
+            System.out.println(fileUser);
+        }
     }
 
 }
