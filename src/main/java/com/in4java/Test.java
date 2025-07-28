@@ -11,7 +11,7 @@ public class Test {
 
     public static void main(String[] args) {
 
-        Collections.synchronizedCollection(new ArrayList<>());
+        char a = '你';
     }
 
 }
