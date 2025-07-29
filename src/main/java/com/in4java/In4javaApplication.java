@@ -12,7 +12,7 @@ public class In4javaApplication {
 
     public static void main(String[] args) {
         System.out.println(Arrays.toString(args));
-        oomDump();
+        //oomDump();
         SpringApplication.run(In4javaApplication.class, args);
     }
 
