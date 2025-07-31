@@ -10,10 +10,10 @@ import java.util.List;
 @SpringBootApplication
 public class In4javaApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         System.out.println(Arrays.toString(args));
-        //oomDump();
         SpringApplication.run(In4javaApplication.class, args);
+        //oomDump();
     }
 
     /**
@@ -22,10 +22,12 @@ public class In4javaApplication {
      * -XX:+HeapDumpOnOutOfMemoryError
      * -XX:HeapDumpPath=/Users/apple/Desktop/oom
      */
-    public static void oomDump(){
+    public static void oomDump() throws InterruptedException {
         List<Object> list = new ArrayList<>();
         while(true){
+            Thread.sleep(1000);
             list.add(new Object());
+            System.out.println("xxx");
         }
     }
 }
