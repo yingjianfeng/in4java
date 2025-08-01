@@ -26,9 +26,9 @@ public class UrlTimeFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         // 获取完整的请求URL
         StringBuffer url = httpRequest.getRequestURL();
-        log.info("过滤器，开始执行，拦截到：【{}】",url);
+        //log.info("过滤器，开始执行，拦截到：【{}】",url);
         chain.doFilter(request, response); // 放行
         stopWatch.stop();
-        log.info("过滤器，结束执行，拦截到：【{}】,耗时：【{}秒】",url,stopWatch.getTotalTimeSeconds());
+        log.info("过滤器，结束执行，拦截到：【{}】,耗时：【{}秒】",url,String.format("%.6f秒", stopWatch.getTotalTimeSeconds()));
     }
 }

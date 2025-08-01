@@ -1,5 +1,6 @@
 package com.in4java;
 
+import com.in4java.jvm.OomObj;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -17,17 +18,21 @@ public class In4javaApplication {
     }
 
     /**
-     * -Xms100M
-     * -Xmx100M
-     * -XX:+HeapDumpOnOutOfMemoryError
-     * -XX:HeapDumpPath=/Users/apple/Desktop/oom
+     -Xms100M
+     -Xmx100M
+     -XX:+HeapDumpOnOutOfMemoryError
+     -XX:HeapDumpPath=/Users/apple/Desktop/oom
+     -XX:+PrintGCDetails
+     -XX:+PrintGCTimeStamps
+     -XX:+PrintHeapAtGC
      */
     public static void oomDump() throws InterruptedException {
         List<Object> list = new ArrayList<>();
         while(true){
-            Thread.sleep(1000);
+            OomObj[] arr = new OomObj[100];
+            //Thread.sleep(1000);
             list.add(new Object());
-            System.out.println("xxx");
+           // System.out.println("xxx");
         }
     }
 }
