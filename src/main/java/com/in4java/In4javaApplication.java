@@ -1,6 +1,7 @@
 package com.in4java;
 
 import com.in4java.jvm.OomObj;
+import com.in4java.spring.init.ApplicationContextInitializerTest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -13,7 +14,11 @@ public class In4javaApplication {
 
     public static void main(String[] args) throws Exception{
         System.out.println(Arrays.toString(args));
-        SpringApplication.run(In4javaApplication.class, args);
+        //SpringApplication.run(In4javaApplication.class, args);
+        SpringApplication application = new SpringApplication(In4javaApplication.class);
+        application.addInitializers(new ApplicationContextInitializerTest());
+        application.run(args);
+
         //oomDump();
     }
 
