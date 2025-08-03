@@ -9,6 +9,3 @@ spring:
     basename: i18n/messages  # 关键：指定路径前缀
     encoding: UTF-8
     cache-duration: 3600s
-  http:
-    encoding:
-      charset: UTF-8
